@@ -11,6 +11,7 @@ class Ticket {
   final String downloadUrl;
   final String currency;
   final int amount;
+  final DateTime useDate;
 
   Ticket({
     String? id,
@@ -23,6 +24,7 @@ class Ticket {
     required this.downloadUrl,
     required this.currency,
     required this.amount,
+    required this.useDate,
   }) : id = id ?? Uuid().v4(); // 使用Uuid().v4()生成唯一ID
 
   factory Ticket.fromMap(Map<String, dynamic> map) {
@@ -37,6 +39,7 @@ class Ticket {
       downloadUrl: map['download_url'],
       currency: map['currency'],
       amount: map['amount'],
+      useDate: DateTime.parse(map['use_date']),
     );
   }
 

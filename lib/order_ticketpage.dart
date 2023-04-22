@@ -159,6 +159,7 @@ class _OrderTicketPageState extends State<OrderTicketPage> {
       downloadUrl: "",
       currency: "EUR",
       amount: 45,
+      useDate: _selectedDate,
     );
 
     if (await Payment().makePayment(ticket)!="") {

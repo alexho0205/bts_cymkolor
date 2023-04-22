@@ -278,7 +278,7 @@ class TicketMailer {
       ..subject = 'Ticket Booking Notice: 2023/5/1 Neuschwanstein'
       ..html = '''
         <h1>Ticket Booking Notice</h1>
-        <p>You have successfully booked your tickets for 2023/5/1 Neuschwanstein</p>
+        <p>You have successfully booked your tickets for 2022/05/01 Neuschwanstein</p>
         <table border="1" cellpadding="5">
           <thead>
             <tr>
