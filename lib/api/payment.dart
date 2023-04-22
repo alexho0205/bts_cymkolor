@@ -4,19 +4,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:bts_cymkolor/models/ticket.dart';
+import 'package:bts_cymkolor/repository/ticketsRepository.dart';
+import 'package:bts_cymkolor/api/EmailSender.dart';
 
 class Payment {
   Map<String, dynamic>? paymentIntent;
-  Future<bool> makePayment() async {
+  Future<String> makePayment(Ticket ticket) async {
     try {
-      paymentIntent = await createPaymentIntent('100', 'USD');
+      paymentIntent =
+          await createPaymentIntent(ticket.amount.toString(), ticket.currency);
       String paymentIntentId = paymentIntent!['id'];
       print('PaymentIntent ID: $paymentIntentId');
 
       //STEP 2: Initialize Payment Sheet
       await Stripe.instance
           .initPaymentSheet(
-          paymentSheetParameters: SetupPaymentSheetParameters(
+              paymentSheetParameters: SetupPaymentSheetParameters(
 /*              applePay: PaymentSheetApplePay(
                 merchantCountryCode: 'TW',
               ),
@@ -24,19 +28,37 @@ class Payment {
                 merchantCountryCode: 'TW',
                 testEnv: true,
               ),*/
-              paymentIntentClientSecret: paymentIntent![
-              'client_secret'], //Gotten from payment intent
-              style: ThemeMode.dark,
-              merchantDisplayName: 'Ikay'))
+                  paymentIntentClientSecret: paymentIntent![
+                      'client_secret'], //Gotten from payment intent
+                  style: ThemeMode.dark,
+                  merchantDisplayName: 'Ikay'))
           .then((value) {
-
         print('Payment Sheet Initialized {value}');
       });
 
       //STEP 3: Display Payment sheet
-      return displayPaymentSheet();
+      String result = "";
+      if (await displayPaymentSheet()) {
+        try {
+          TicketsRepository ticketsRepository = TicketsRepository();
+          ticket.paymentId = paymentIntentId;
+          await ticketsRepository.addTicket(ticket).then((value) async {
+            TicketMailer ticketMailer = TicketMailer();
+            await ticketMailer.sendTicketEmail(ticket).then((value) {
+              print('Ticket sent');
+              result = paymentIntentId;
+            });
+          });
+        } catch (e) {
+          print('$e');
+          result = "";
+        }
+        return result;
+      } else {
+        return "";
+      }
     } catch (err) {
-      return false;
+      return "";
       //throw Exception(err);
     }
   }
@@ -58,7 +80,6 @@ class Payment {
       print('$e');
       return false;
     }
-
   }
 
   createPaymentIntent(String amount, String currency) async {
@@ -89,4 +110,3 @@ class Payment {
     return calculatedAmout.toString();
   }
 }
-

@@ -13,10 +13,10 @@ void main() async {
   //Assign publishable key to flutter_stripe
   Stripe.publishableKey = "pk_test_51MyFbGA3VDAE5Yfot311V4cGI1gZ8tyqpkYdBxJYVlujGPDbsWu64p02Mpukc1OUV3tQcRSv8zM4CUcXrxXar2UP00Gz7eWUP4";
 
-  FlutterServicesBinding.ensureInitialized();
+  //FlutterServicesBinding.ensureInitialized();
 
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
+  //await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp();
   //Load our .env file that contains our Stripe Secret key
   await dotenv.load(fileName: "assets/.env");
   runApp(const MyApp());

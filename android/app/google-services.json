@@ -1,0 +1,134 @@
+{
+  "project_info": {
+    "project_number": "698074136642",
+    "project_id": "pierce-ada1e",
+    "storage_bucket": "pierce-ada1e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:698074136642:android:7e492604fb8b3424f86ddb",
+        "android_client_info": {
+          "package_name": "com.cymmetrik.bts_cymkolor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "698074136642-abh7ajngu94d61vcbt156v1vunhd4uqs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBF8URifX-WEHRWJwbvOG6T41zu6B06sz0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "698074136642-9eici2s67sosvlpv61f5kvhn1bkv2br7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "698074136642-d6ep6llgfbmskikv3cvmvcl6pp73un5t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.cymmetrik.pierce"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:698074136642:android:9601cf924a7fa530f86ddb",
+        "android_client_info": {
+          "package_name": "com.cymmetrik.pierce"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "698074136642-ohg127neikucbfnol1vkn1a38qaoeipr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cymmetrik.pierce",
+            "certificate_hash": "70229ef7dbce6468d8f89aa5ab604e1823bd8110"
+          }
+        },
+        {
+          "client_id": "698074136642-abh7ajngu94d61vcbt156v1vunhd4uqs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBF8URifX-WEHRWJwbvOG6T41zu6B06sz0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "698074136642-9eici2s67sosvlpv61f5kvhn1bkv2br7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "698074136642-d6ep6llgfbmskikv3cvmvcl6pp73un5t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.cymmetrik.pierce"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:698074136642:android:fb8ad96a193a9483f86ddb",
+        "android_client_info": {
+          "package_name": "com.cymmetrik.todo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "698074136642-4l53691kd37e9d7g05d5tfqhs20ci07m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cymmetrik.todo",
+            "certificate_hash": "70229ef7dbce6468d8f89aa5ab604e1823bd8110"
+          }
+        },
+        {
+          "client_id": "698074136642-abh7ajngu94d61vcbt156v1vunhd4uqs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBF8URifX-WEHRWJwbvOG6T41zu6B06sz0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "698074136642-9eici2s67sosvlpv61f5kvhn1bkv2br7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "698074136642-d6ep6llgfbmskikv3cvmvcl6pp73un5t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.cymmetrik.pierce"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

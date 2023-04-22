@@ -5,12 +5,12 @@ class Ticket {
   final int adultTickets;
   final int halfTickets;
   final String email;
-  final String paymentId;
+  String paymentId;
   final bool haveGetTicket;
   final int downloadCount;
   final String downloadUrl;
   final String currency;
-  final double amount;
+  final int amount;
 
   Ticket({
     String? id,

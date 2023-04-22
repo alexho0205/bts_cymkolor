@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bts_cymkolor/homescreen.dart';
 
 import 'api/payment.dart';
+import 'package:bts_cymkolor/models/ticket.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -24,23 +25,34 @@ class _HomeScreenState extends State<HomeScreen> {
             TextButton(
               child: const Text('Make Payment'),
               onPressed: () async {
-                if (await new Payment().makePayment())
+                Ticket ticket = Ticket(
+                  adultTickets: 2,
+                  halfTickets: 3,
+                  email: "ichang.lee@cymmetrik.com",
+                  paymentId: "",
+                  haveGetTicket: false,
+                  downloadCount: 0,
+                  downloadUrl: "",
+                  currency: "USD",
+                  amount: 100,
+                );
+                if (await new Payment().makePayment(ticket)!="")
                   showDialog(
                       context: context,
                       builder: (_) => AlertDialog(
-                        content: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.check_circle,
-                              color: Colors.green,
-                              size: 100.0,
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  Icons.check_circle,
+                                  color: Colors.green,
+                                  size: 100.0,
+                                ),
+                                SizedBox(height: 10.0),
+                                Text("Payment Successful!"),
+                              ],
                             ),
-                            SizedBox(height: 10.0),
-                            Text("Payment Successful!"),
-                          ],
-                        ),
-                      ));
+                          ));
                 else
                   AlertDialog(
                     content: Column(

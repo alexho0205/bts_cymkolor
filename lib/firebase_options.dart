@@ -48,7 +48,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAzAdHSIr4DU8SJU286VoOnHmih7MB41Go',
-    appId: '1:662084476071:android:d59a70d587b2428d770f82',
+    appId: '1:698074136642:android:7e492604fb8b3424f86ddb',
     messagingSenderId: '662084476071',
     projectId: 'todos-4f767',
     storageBucket: 'todos-4f767.appspot.com',
@@ -61,6 +61,6 @@ class DefaultFirebaseOptions {
     projectId: 'todos-4f767',
     storageBucket: 'todos-4f767.appspot.com',
     iosClientId: '662084476071-2sue3qjo9ufptdci8fp6gh65nf8i2ic6.apps.googleusercontent.com',
-    iosBundleId: 'com.cymmetrik.todo',
+    iosBundleId: 'com.cymmetrik.bts_cymkolor',
   );
 }

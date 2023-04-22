@@ -9,6 +9,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:mailer/src/entities/attachment.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:bts_cymkolor/models/ticket.dart';
 
 class TicketMailer {
 
@@ -49,10 +50,8 @@ class TicketMailer {
     return file;
   }
 
-  Future<void> sendTicketEmail() async {
-    String username = '${dotenv.env['GMAIL_USERNAME']}';
-    String password = '${dotenv.env['GMAIL_PASSWORD']}';
-    final smtpServer = gmail(username, password);
+  Future<void> sendTicketEmail(Ticket ticket) async {
+
 
     final ticketUrl = 'https://ticket.cymcolor.com/?uid=ED92AE1A-E1EA-4274-99F2-2402317D24B6';
     File qrImage = await generateQrImageFile(ticketUrl);
@@ -68,9 +67,19 @@ class TicketMailer {
       contentType: contentType.toString(),
     );
 
+    // 使用自定义SMTP服务器配置
+    final smtpServer = SmtpServer(
+      '${dotenv.env['MAIL_HOST']}',
+      port: int.parse('${dotenv.env['MAIL_PORT']}'), // 使用适当的端口号，通常是 25, 465 或 587
+      username: '${dotenv.env['MAIL_USERNAME']}',
+      password: '${dotenv.env['MAIL_PASSWORD']}',
+      ssl: false, // 如果需要SSL/TLS，请将其设置为true
+      ignoreBadCertificate: false, // 如果需要忽略证书错误，请将其设置为true
+    );
+
     final message = Message()
       ..from = Address(smtpServer.username?? '', 'Ticket Sender')
-      ..recipients.add('recipient@example.com')
+      ..recipients.add(ticket.email)
       ..subject = 'Ticket Booking Notice: 2023/5/1 Neuschwanstein'
       ..html = '''
         <h1>Ticket Booking Notice</h1>
@@ -85,15 +94,15 @@ class TicketMailer {
           <tbody>
             <tr>
               <td>All Tickets</td>
-              <td>2</td>
+              <td>${ticket.adultTickets}</td>
             </tr>
             <tr>
               <td>Half ticket</td>
-              <td>3</td>
+              <td>${ticket.halfTickets}</td>
             </tr>
           </tbody>
         </table>
-        <p>Total amount: 61 EUR</p>
+        <p>Total amount: ${ticket.amount} ${ticket.currency}</p>
         ''';
 
     try {
