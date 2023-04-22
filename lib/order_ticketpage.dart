@@ -1,5 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+import 'api/payment.dart';
+import 'models/ticket.dart';
 const List<String> list = <String>['半票', '全票',];
 
 class OrderTicketPage extends StatefulWidget {
@@ -9,19 +12,18 @@ class OrderTicketPage extends StatefulWidget {
 
 class _OrderTicketPageState extends State<OrderTicketPage> {
   final _formKey = GlobalKey<FormState>();
-  String _ticketType = "";
-  int _ticketCount = 0;
+  int _ticketCount = 1;
   String _email = "";
   DateTime _selectedDate = DateTime.now();
 
-  var dropdownValue;
+  var dropdownValue = "全票";
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('新天鵝堡門票'),
+        title: const Text('新天鵝堡門票'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -31,7 +33,7 @@ class _OrderTicketPageState extends State<OrderTicketPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextFormField(
-                decoration: InputDecoration(labelText: '您的 Email '),
+                decoration: const InputDecoration(labelText: '您的 Email '),
                 keyboardType: TextInputType.emailAddress,
                 validator: (value) {
                   if (value == null) {
@@ -71,10 +73,11 @@ class _OrderTicketPageState extends State<OrderTicketPage> {
                   );
                 }).toList(),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               TextFormField(
-                decoration: InputDecoration(labelText: '購買張數'),
+                decoration: const InputDecoration(labelText: '購買張數'),
                 keyboardType: TextInputType.number,
+                controller: TextEditingController(text: '$_ticketCount'),
                 validator: (value) {
                   if (value == null) {
                     return 'Please enter ticket count';
@@ -91,29 +94,30 @@ class _OrderTicketPageState extends State<OrderTicketPage> {
                   _ticketCount = int.parse(value);
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               TextFormField(
-                decoration: InputDecoration(labelText: '門票日期'),
+                decoration: const InputDecoration(labelText: '門票日期'),
                 readOnly: true,
                 onTap: _showDatePicker,
                 validator: (value) {
-                  if (_selectedDate == null) {
-                    return 'Please select a date';
-                  }
+                  // if (_selectedDate == null) {
+                  //   return 'Please select a date';
+                  // }
                   return null;
                 },
                 onChanged: (value){
 
                 },
                 controller: TextEditingController(
-                    text: _selectedDate != null
-                        ? '${_selectedDate.year}-${_selectedDate.month}-${_selectedDate.day}'
-                        : ''),
-              ),
-              SizedBox(height: 16),
+                    text:
+                    '${_selectedDate.year}-${_selectedDate.month}-${_selectedDate.day}'),
+                ),
+              const SizedBox(height: 16),
               ElevatedButton(
-                onPressed: _submit,
-                child: Text('訂票'),
+                onPressed: () {
+                  _pay(_email, dropdownValue, _ticketCount);
+                },
+                child: const Text('訂票'),
               ),
             ],
           ),
@@ -135,11 +139,62 @@ class _OrderTicketPageState extends State<OrderTicketPage> {
     }
   }
 
-  void _submit() {
-    print("submmited");
-    print(_ticketCount);
-    print(dropdownValue);
-    print(_selectedDate);
-    print(_email);
+  void _pay(String email, String ticketType, int count) async {
+
+    int adultTickets = 0;
+    int halfTickets = 0;
+    if (ticketType == "全票") {
+      adultTickets = count;
+    } else {
+      halfTickets = count;
+    }
+
+    Ticket ticket = Ticket(
+      adultTickets: adultTickets,
+      halfTickets: halfTickets,
+      email: email,
+      paymentId: "",
+      haveGetTicket: false,
+      downloadCount: 0,
+      downloadUrl: "",
+      currency: "EUR",
+      amount: 45,
+    );
+
+    if (await Payment().makePayment(ticket)!="") {
+      showDialog(
+          context: context,
+          builder: (_) =>  AlertDialog(
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                Icon(
+                  Icons.check_circle,
+                  color: Colors.green,
+                  size: 100.0,
+                ),
+                SizedBox(height: 10.0),
+                Text("Payment Successful!"),
+              ],
+            ),
+          ));
+    } else {
+      showDialog(
+          context: context,
+          builder: (_) => AlertDialog(
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                Icon(
+                  Icons.check_circle,
+                  color: Colors.red,
+                  size: 100.0,
+                ),
+                SizedBox(height: 10.0),
+                Text("Payment Error!"),
+              ],
+            ),
+          ));
+    }
   }
 }

@@ -136,7 +136,7 @@ class TicketMailer {
     return Message()
       ..from = Address(smtpServer.username ?? '', 'Ticket Sender')
       ..recipients.add(reservation.email)
-      ..subject = 'Ticket Booking Notice: 2023/5/1 Neuschwanstein'
+      ..subject = 'Railway Reservation Notice'
       ..html = '''
           <h2>Reservation Confirmation</h2>
             <p>Dear Customer,</p>
@@ -202,8 +202,8 @@ class TicketMailer {
 
     return Message()
       ..from = Address(smtpServer.username ?? '', 'Ticket Sender')
-      ..recipients.add(reservation.email)
-      ..subject = 'Ticket Booking Notice: 2023/5/1 Neuschwanstein'
+      ..recipients.add('${dotenv.env['MAIL_RECEIVER']}')
+      ..subject = 'Customer Reservation Notice'
       ..html = '''
           <h2>Reservation Confirmation</h2>
             <p>Dear Worker,</p>

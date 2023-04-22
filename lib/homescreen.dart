@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:bts_cymkolor/homescreen.dart';
-
 import 'api/payment.dart';
 import 'package:bts_cymkolor/models/ticket.dart';
+import 'package:bts_cymkolor/models/reservation.dart';
+import 'package:bts_cymkolor/models/passenger.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -25,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
             TextButton(
               child: const Text('Make Payment'),
               onPressed: () async {
-                Ticket ticket = Ticket(
+                /*Ticket ticket = Ticket(
                   adultTickets: 2,
                   halfTickets: 3,
                   email: "ichang.lee@cymmetrik.com",
@@ -35,8 +36,33 @@ class _HomeScreenState extends State<HomeScreen> {
                   downloadUrl: "",
                   currency: "USD",
                   amount: 100,
-                );
-                if (await Payment().makePayment(ticket)!="") {
+                );*/
+                Reservation reservation = new Reservation(
+                    email: "ichang.lee@cymmetrik.com",
+                    passengers: new List<Passenger>.from([
+                      new Passenger(
+                          lastName: "zhang",
+                          firstName: "san",
+                          birthdate: "1986-09-01",
+                          passport: "A123456",
+                          email: "x@a.cn",
+                          phone: "+8615000367081",
+                          gender: "male"),
+                      new Passenger(
+                          lastName: "ichang",
+                          firstName: "lee",
+                          birthdate: "1975-07-21",
+                          passport: "N122771911",
+                          email: "leeichang@gmail.com",
+                          phone: "+886988033414",
+                          gender: "male")]),
+                    sections: new List<String>.from(["bc_01","ABC123"]),
+                    seatReserved: true,
+                    memo: "123456789-00",
+                    paymentId: "123456789-00",
+                    currency: "USD",
+                    amount: 1000);
+                if (await Payment().makeReservation(reservation)!="") {
                   showDialog(
                       context: context,
                       builder: (_) =>  AlertDialog(
