@@ -36,10 +36,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   currency: "USD",
                   amount: 100,
                 );
-                if (await new Payment().makePayment(ticket)!="")
+                if (await Payment().makePayment(ticket)!="") {
                   showDialog(
                       context: context,
-                      builder: (_) => AlertDialog(
+                      builder: (_) =>  AlertDialog(
                             content: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -53,23 +53,24 @@ class _HomeScreenState extends State<HomeScreen> {
                               ],
                             ),
                           ));
-                else
-                  AlertDialog(
-                    content: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Row(
-                          children: const [
+                } else {
+                  showDialog(
+                      context: context,
+                      builder: (_) => AlertDialog(
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
                             Icon(
-                              Icons.cancel,
+                              Icons.check_circle,
                               color: Colors.red,
+                              size: 100.0,
                             ),
-                            Text("Payment Failed"),
+                            SizedBox(height: 10.0),
+                            Text("Payment Error!"),
                           ],
                         ),
-                      ],
-                    ),
-                  );
+                      ));
+                }
               },
             ),
           ],

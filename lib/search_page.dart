@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'constent.dart';
+import 'order_ticketpage.dart';
+
 class TravelInfo {
   final String image;
   final String title;
@@ -73,7 +76,16 @@ class _TravelPageState extends State<TravelPage> {
                 ),
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushNamed(order_page);
+
+                  // Navigator.of(context)
+                  //     .push(MaterialPageRoute(builder: (context) {
+                  //   return OrderTicketPage();
+                  // }));
+
+                  // Navigator.of(context).pop();
+                },
                 child: const Text('購買'),
               ),
               const SizedBox(height: 20.0),

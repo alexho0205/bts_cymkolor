@@ -2,11 +2,13 @@ import 'package:bts_cymkolor/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'constent.dart';
 import 'homescreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_services_binding/flutter_services_binding.dart';
 import 'firebase_options.dart';
+import 'order_ticketpage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,44 +22,50 @@ void main() async {
   await Firebase.initializeApp();
   //Load our .env file that contains our Stripe Secret key
   await dotenv.load(fileName: "assets/.env");
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  final routes = <String, WidgetBuilder>{ // map 關係 => keyStr : View Widget
+    order_page: (context) => OrderTicketPage(),
+  };
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
-      //initial route
       home: TravelPage(),
+      routes: routes,
     );
   }
 }
+
+// class MyHomePage extends StatefulWidget {
+//   const MyHomePage({super.key, required this.title});
+//   final String title;
+//
+//   @override
+//   State<MyHomePage> createState() => _MyHomePageState();
+// }
+//
+// class _MyHomePageState extends State<MyHomePage> {
+//
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       theme: ThemeData(
+//         primarySwatch: Colors.green,
+//       ),
+//       //initial route
+//       home: TravelPage(),
+//     );
+//   }
+// }
