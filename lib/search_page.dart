@@ -27,14 +27,14 @@ class _TravelPageState extends State<TravelPage> {
       image: 'assets/image/travel_1_img.jpg',
       title: '新天鵝堡',
       description: '行程包含知名景點',
-      price: 'NTD 50,00',
+      price: 'EUR 45',
     ),
-    TravelInfo(
-      image: 'assets/image/travel_1_img.jpg',
-      title: '聖米希爾山',
-      description: '行程包含南山塔、明洞、樂天世界等知名景點',
-      price: 'NTD 40,000',
-    ),
+    // TravelInfo(
+    //   image: 'assets/image/travel_1_img.jpg',
+    //   title: '聖米希爾山',
+    //   description: '行程包含南山塔、明洞、樂天世界等知名景點',
+    //   price: 'NTD 40,000',
+    // ),
   ];
 
   @override
