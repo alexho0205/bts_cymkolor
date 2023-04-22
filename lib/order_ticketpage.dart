@@ -158,7 +158,7 @@ class _OrderTicketPageState extends State<OrderTicketPage> {
       downloadCount: 0,
       downloadUrl: "",
       currency: "EUR",
-      amount: 45,
+      amount: 45*count,
       useDate: _selectedDate,
     );
 

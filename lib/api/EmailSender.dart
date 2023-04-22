@@ -11,6 +11,7 @@ import 'package:mailer/src/entities/attachment.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:bts_cymkolor/models/ticket.dart';
 import 'package:bts_cymkolor/models/reservation.dart';
+import 'package:intl/intl.dart';
 
 enum MailType { Ticket, Reservation, Reservation_inner, Payment }
 
@@ -89,7 +90,7 @@ class TicketMailer {
       ..subject = 'Ticket Booking Notice: 2023/5/1 Neuschwanstein'
       ..html = '''
         <h1>Ticket Booking Notice</h1>
-        <p>You have successfully booked your tickets for 2023/5/1 Neuschwanstein</p>
+        <p>You have successfully booked your tickets for  ${DateFormat('yyyy/MM/dd').format(ticket.useDate)} Neuschwanstein</p>
         <table border="1" cellpadding="5">
           <thead>
             <tr>
@@ -278,7 +279,7 @@ class TicketMailer {
       ..subject = 'Ticket Booking Notice: 2023/5/1 Neuschwanstein'
       ..html = '''
         <h1>Ticket Booking Notice</h1>
-        <p>You have successfully booked your tickets for 2022/05/01 Neuschwanstein</p>
+        <p>You have successfully booked your tickets for ${DateFormat('yyyy/MM/dd').format(ticket.useDate)} Neuschwanstein</p>
         <table border="1" cellpadding="5">
           <thead>
             <tr>
