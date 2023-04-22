@@ -5,8 +5,11 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:bts_cymkolor/models/ticket.dart';
+import 'package:bts_cymkolor/models/reservation.dart';
 import 'package:bts_cymkolor/repository/ticketsRepository.dart';
+import 'package:bts_cymkolor/repository/reservation_repository.dart';
 import 'package:bts_cymkolor/api/EmailSender.dart';
+import 'package:mailer/mailer.dart';
 
 class Payment {
   Map<String, dynamic>? paymentIntent;
@@ -47,6 +50,67 @@ class Payment {
             await ticketMailer.sendTicketEmail(ticket).then((value) {
               print('Ticket sent');
               result = paymentIntentId;
+            });
+          });
+        } catch (e) {
+          print('$e');
+          result = "";
+        }
+        return result;
+      } else {
+        return "";
+      }
+    } catch (err) {
+      return "";
+      //throw Exception(err);
+    }
+  }
+
+  Future<String> makeReservation(Reservation reservation) async {
+    try {
+      paymentIntent = await createPaymentIntent(
+          reservation.amount.toString(), reservation.currency);
+      String paymentIntentId = paymentIntent!['id'];
+      print('PaymentIntent ID: $paymentIntentId');
+
+      //STEP 2: Initialize Payment Sheet
+      await Stripe.instance
+          .initPaymentSheet(
+              paymentSheetParameters: SetupPaymentSheetParameters(
+/*              applePay: PaymentSheetApplePay(
+                merchantCountryCode: 'TW',
+              ),
+              googlePay: PaymentSheetGooglePay(
+                merchantCountryCode: 'TW',
+                testEnv: true,
+              ),*/
+                  paymentIntentClientSecret: paymentIntent![
+                      'client_secret'], //Gotten from payment intent
+                  style: ThemeMode.dark,
+                  merchantDisplayName: 'Ikay'))
+          .then((value) {
+        print('Payment Sheet Initialized {value}');
+      });
+
+      //STEP 3: Display Payment sheet
+      String result = "";
+      if (await displayPaymentSheet()) {
+        try {
+          ReservationRepository reservationRepository = ReservationRepository();
+          reservation.paymentId = paymentIntentId;
+          await reservationRepository
+              .createReservation(reservation)
+              .then((value) async {
+            TicketMailer ticketMailer = TicketMailer();
+            Message message = ticketMailer.GetEmailMessage<Reservation>(
+                MailType.Reservation, reservation);
+            await ticketMailer.sendEmail(message).then((value) async {
+              Message message = ticketMailer.GetEmailMessage<Reservation>(
+                  MailType.Reservation_inner, reservation);
+              await ticketMailer.sendEmail(message).then((value) {
+                print('Ticket sent');
+                result = paymentIntentId;
+              });
             });
           });
         } catch (e) {
