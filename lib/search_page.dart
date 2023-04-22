@@ -1,0 +1,87 @@
+import 'package:flutter/material.dart';
+
+class TravelInfo {
+  final String image;
+  final String title;
+  final String description;
+  final String price;
+
+  TravelInfo({required this.image, required this.title, required this.description, required this.price});
+}
+
+class TravelPage extends StatefulWidget {
+
+  @override
+  _TravelPageState createState() {
+    return _TravelPageState();
+  }
+}
+
+class _TravelPageState extends State<TravelPage> {
+
+  final List<TravelInfo> travelInfoList = [
+    TravelInfo(
+      image: 'assets/image/travel_1_img.jpg',
+      title: '新天鵝堡',
+      description: '行程包含知名景點',
+      price: 'NTD 50,00',
+    ),
+    TravelInfo(
+      image: 'assets/image/travel_1_img.jpg',
+      title: '聖米希爾山',
+      description: '行程包含南山塔、明洞、樂天世界等知名景點',
+      price: 'NTD 40,000',
+    ),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('旅遊資訊'),
+      ),
+      body: ListView.builder(
+        itemCount: travelInfoList.length,
+        itemBuilder: (context, index) {
+          final travelInfo = travelInfoList[index];
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Image.asset(travelInfo.image),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  travelInfo.title,
+                  style: const TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(travelInfo.description),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  travelInfo.price,
+                  style: const TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {},
+                child: const Text('購買'),
+              ),
+              const SizedBox(height: 20.0),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
