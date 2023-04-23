@@ -40,25 +40,30 @@ class _TravelPageState extends State<TravelPage> {
   ];
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
+    loadPlans();
+  }
 
-    // todo get solutions
-    List<Plan> _plans = [];
-   PlanRepository repository = new PlanRepository();
-    repository.getPlans().first.then((List<Plan> plans) {
-      plans.forEach((plan) {
-        TravelInfo t = TravelInfo(
-          image: plan.imageUrl,
-          title: plan.title,
-          description: plan.description,
-          price: '${plan.currency} ${(plan.price).toString()}' ,
-        );
-        setState(() {
-          travelInfoList.add(t);
-        });
+  void loadPlans() async {
+    PlanRepository repository = PlanRepository();
+    List<Plan> plans = await repository.getPlans().first;
+
+    plans.forEach((plan) {
+      TravelInfo t = TravelInfo(
+        image: plan.imageUrl,
+        title: plan.title,
+        description: plan.description,
+        price: '${plan.currency} ${(plan.price).toString()}',
+      );
+      setState(() {
+        travelInfoList.add(t);
       });
     });
-    //travelInfoList.add(  );
+  }
+
+  @override
+  Widget build(BuildContext context) {
 
     return Scaffold(
       appBar: AppBar(
