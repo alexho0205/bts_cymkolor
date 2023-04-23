@@ -6,8 +6,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'constent.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'order_pay_set_ticketpage.dart';
 import 'order_set_ticketpage.dart';
-import 'order_ticketpage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
   final routes = <String, WidgetBuilder>{ // map 關係 => keyStr : View Widget
     // order_page: (context) => OrderTicketPage(),
     order_set_page: (context) => OrderSetTicketPage(),
+    order_set_pay_page: (context) => OrderSetPayTicketPage(),
   };
 
   // This widget is the root of your application.

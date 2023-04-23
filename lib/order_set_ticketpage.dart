@@ -258,11 +258,18 @@ class _OrderSetTicketPageState extends State<OrderSetTicketPage> {
                             setState(() {
                               _isLoading = false;
                               _isOnlineOrdersModel = value;
+                              Navigator.of(context).pushNamed(order_set_pay_page, arguments: {
+                                'onlineOrdersModelId': _isOnlineOrdersModel!.id!,
+                                'searchPriceFilterModel': _isGetTheCheapestTicket!,
+                                'g2railPassenger': _g2railPassengers!,
+                                'ticketCount': _ticketCount,
+                              });
                             })
                           }, onError: (error) => {
                             setState(() {
                               _isLoading = false;
                               _isGetTheCheapestTicket = null;
+                              _g2railPassengers = null;
                             })
                           });
                         }
@@ -301,6 +308,7 @@ class _OrderSetTicketPageState extends State<OrderSetTicketPage> {
 
   SearchPriceFillterModel? _isGetTheCheapestTicket;
   OnlineOrdersModel? _isOnlineOrdersModel;
+  G2railPassengers? _g2railPassengers;
 
   Future<SearchPriceFillterModel?> _getRailwaySet(int ticketCount, DateTime date, String ticketType) async {
 
@@ -314,35 +322,36 @@ class _OrderSetTicketPageState extends State<OrderSetTicketPage> {
     }
 
     // 取 key
-    var rtn = await _client.getSolutions(
-        from, to, dateStr, "10:00", ticketCount, 0);
+    var rtn = await _client.getSolutions(from, to, dateStr, "10:00", ticketCount, 0);
 
     SearchPriceFillterModel? searchPriceFilterModel;
     if(rtn != "") {
       var rtn2 = await _client.getAsyncResult(rtn.toString(), retryCounts: 10);
       searchPriceFilterModel = _client.getAsyncResultPrice(rtn2); // 最低價
+      return searchPriceFilterModel;
+    } else {
+      return searchPriceFilterModel;
     }
 
-    return searchPriceFilterModel;
   }
 
   Future<OnlineOrdersModel?> _bookingTicket() async {
 
     List<G2railPassengers> passengers = [];
-    passengers.add(G2railPassengers(
+    var passenger = G2railPassengers(
         lastName: _lastName,
         firstName: _firstName,
         birthdate: DateFormat('yyyy-MM-dd').format(_birthday),
         passport: _passport,
         email: _email,
         phone: _cellphone,
-        gender: _gender));
+        gender: _gender);
+    _g2railPassengers = passenger;
+    passengers.add(passenger);
     List<String> sections = [_isGetTheCheapestTicket!.bookingcode!];
 
-    var rtn3 = await _client.getOnlineOrders(
-        passengers, sections, true, "partner_order_id");
-    var rtn4 =
-        await _client.getOrdersAsyncResult(rtn3);
+    var rtn3 = await _client.getOnlineOrders(passengers, sections, true, "partner_order_id");
+    var rtn4 = await _client.getOrdersAsyncResult(rtn3);
 
     return rtn4;
   }
