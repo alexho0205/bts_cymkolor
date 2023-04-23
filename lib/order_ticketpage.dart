@@ -6,6 +6,16 @@ import 'models/ticket.dart';
 const List<String> list = <String>['半票', '全票',];
 
 class OrderTicketPage extends StatefulWidget {
+  final String title;
+  final int price;
+  final String currency;
+
+  OrderTicketPage({
+    required this.title,
+    required this.price,
+    required this.currency,
+  });
+
   @override
   _OrderTicketPageState createState() => _OrderTicketPageState();
 }
@@ -17,13 +27,22 @@ class _OrderTicketPageState extends State<OrderTicketPage> {
   DateTime _selectedDate = DateTime.now();
 
   var dropdownValue = "全票";
+  String _title = "新天鵝堡門票";
+  int _price = 45;
+  String _currency = "EUR";
 
+  void initState() {
+    super.initState();
+    _title = widget.title;
+    _price = widget.price;
+    _currency = widget.currency;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('新天鵝堡門票'),
+        title: Text(_title),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -157,8 +176,8 @@ class _OrderTicketPageState extends State<OrderTicketPage> {
       haveGetTicket: false,
       downloadCount: 0,
       downloadUrl: "",
-      currency: "EUR",
-      amount: 45*count,
+      currency: _currency,
+      amount: _price*count,
       useDate: _selectedDate,
     );
 

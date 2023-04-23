@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
   MyApp({super.key});
 
   final routes = <String, WidgetBuilder>{ // map 關係 => keyStr : View Widget
-    order_page: (context) => OrderTicketPage(),
+    //order_page: (context) => OrderTicketPage(),
   };
 
   // This widget is the root of your application.
