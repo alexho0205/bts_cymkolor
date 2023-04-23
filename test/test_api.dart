@@ -9,11 +9,13 @@ main() {
         baseUrl: "http://alpha.api.g2rail.com",
         apiKey: "fa656e6b99d64f309d72d6a8e7284953",
         secret: "9a52b1f7-7c96-4305-8569-1016a55048bc");
-    /*var rtn = await client.getSolutions(
-        "CT_LV7D0LYK2", "CT_LV7D1LOK2", "2023-04-24", "10:00", 1, 0);
+    var rtn = await client.getSolutions(
+        "CT_LV7D0LYK2", "CT_LV7D1LOK2", "2023-04-24", "10:00", 1, 0); // 取 key
     print(rtn.toString());
-    var rtn2 = await client.getAsyncResult(rtn.toString());
-    print(rtn2[1].toString());*/
+    var rtn2 = await client.getAsyncResult(rtn.toString()); // 取得火車資訊
+    var rtn2_2 = client.getAsyncResultPrice(rtn2); // 最低價
+
+    print(rtn2[1].toString());
 
     List<Passengers> passengers = [];
     passengers.add(Passengers(
@@ -26,13 +28,14 @@ main() {
         gender: "male"));
     List<String> sections = ["P_9JD3FG"];
 
-    /*var rtn3 = await client.getOnlineOrders(
+    var rtn3 = await client.getOnlineOrders(
         passengers, sections, true, "partner_order_id");
     print(rtn3.toString());
     var rtn4 =
         await client.getOrdersAsyncResult("0433a0133681da6a2d02046c789567fa");
-    print(rtn4.toString());*/
+    print(rtn4.toString());
 
+    // Confirm API
     /*var rtn5 = await client.getConfirmOrders("OD_9MJZ658YD");
     print(rtn5.toString());
     var rtn6 =

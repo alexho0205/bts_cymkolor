@@ -3,7 +3,7 @@ class SearchPriceFillterModel {
   String? bookingcode;
   int? price;
   String? departure; //發車時間
-  String? arrival; //到站時間
+  String? arrival; //到站時間(先不要理)
   Dur? duration; //時常
 
   SearchPriceFillterModel(

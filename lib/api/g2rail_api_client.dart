@@ -182,7 +182,7 @@ class GrailApiClient {
   }
 
   Future<List<SearchTicketModel?>> getAsyncResult(String asyncKey,
-      {int retryCounts = 3}) async {
+      {int retryCounts = 100}) async {
     if (retryCounts == 0) {
       return [];
     }

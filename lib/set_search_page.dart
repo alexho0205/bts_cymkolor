@@ -27,13 +27,13 @@ class _TravelSetPageState extends State<TravelSetPage> {
   final List<TravelSetInfo> travelInfoList = [
     TravelSetInfo(
       image: 'assets/image/travel_set_1_img.jpg',
-      title: '新天鵝堡一日套票',
+      title: order_set_1_title,
       description: '最優惠的行程',
       description2: '鐵路+門票',
     ),
     TravelSetInfo(
       image: 'assets/image/travel_set_2_img.jpg',
-      title: '聖米歇爾山一日套票',
+      title: order_set_2_title,
       description: '最優惠的行程',
       description2: '鐵路+門票',
     ),
@@ -76,7 +76,8 @@ class _TravelSetPageState extends State<TravelSetPage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(order_set_page);
+                  Navigator.of(context).pushNamed(order_set_page, arguments:
+                  { 'travelSetType' : travelInfo.title });
                 },
                 child: const Text('查詢'),
               ),

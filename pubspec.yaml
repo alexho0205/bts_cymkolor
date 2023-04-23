@@ -48,6 +48,7 @@ dependencies:
   flutter_services_binding: ^0.1.0
   firebase_auth:
   twilio_flutter: ^0.0.9
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:
