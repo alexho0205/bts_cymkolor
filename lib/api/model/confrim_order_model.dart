@@ -11,14 +11,14 @@ class ConfrimOrdersModel {
 
   ConfrimOrdersModel(
       {this.id,
-      this.order,
-      this.ticketPrice,
-      this.paymentPrice,
-      this.rtpPrice,
-      this.chargingPrice,
-      this.rebateAmount,
-      this.records,
-      this.confirmAgain});
+        this.order,
+        this.ticketPrice,
+        this.paymentPrice,
+        this.rtpPrice,
+        this.chargingPrice,
+        this.rebateAmount,
+        this.records,
+        this.confirmAgain});
 
   ConfrimOrdersModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -30,7 +30,7 @@ class ConfrimOrdersModel {
         ? Price.fromJson(json['payment_price'])
         : null;
     rtpPrice =
-        json['rtp_price'] != null ? Price.fromJson(json['rtp_price']) : null;
+    json['rtp_price'] != null ? Price.fromJson(json['rtp_price']) : null;
     chargingPrice = json['charging_price'] != null
         ? Price.fromJson(json['charging_price'])
         : null;
@@ -88,20 +88,20 @@ class Order {
 
   Order(
       {this.id,
-      this.pNR,
-      this.railway,
-      this.from,
-      this.to,
-      this.departure,
-      this.passengers,
-      this.tickets,
-      this.memo});
+        this.pNR,
+        this.railway,
+        this.from,
+        this.to,
+        this.departure,
+        this.passengers,
+        this.tickets,
+        this.memo});
 
   Order.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     pNR = json['PNR'];
     railway =
-        json['railway'] != null ? Railway.fromJson(json['railway']) : null;
+    json['railway'] != null ? Railway.fromJson(json['railway']) : null;
     from = json['from'] != null ? From.fromJson(json['from']) : null;
     to = json['to'] != null ? From.fromJson(json['to']) : null;
     departure = json['departure'];
@@ -191,12 +191,12 @@ class Passengers {
 
   Passengers(
       {this.id,
-      this.firstName,
-      this.lastName,
-      this.birthdate,
-      this.email,
-      this.phone,
-      this.gender});
+        this.firstName,
+        this.lastName,
+        this.birthdate,
+        this.email,
+        this.phone,
+        this.gender});
 
   Passengers.fromJson(Map<String, dynamic> json) {
     id = json['id'];

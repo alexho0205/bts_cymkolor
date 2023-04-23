@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_init_to_null
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -9,6 +11,7 @@ import 'package:bts_cymkolor/api/model/search_ticket_model.dart';
 import 'package:bts_cymkolor/api/model/online_orders_model.dart';
 import 'package:bts_cymkolor/api/model/confrim_order_model.dart';
 import 'package:bts_cymkolor/api/model/download_ticket_model.dart';
+import 'package:bts_cymkolor/api/model/search_price_filter.dart';
 
 class SearchCriteria {
   String from;
@@ -48,12 +51,12 @@ class Passengers {
 
   Passengers(
       {this.lastName,
-      this.firstName,
-      this.birthdate,
-      this.passport,
-      this.email,
-      this.phone,
-      this.gender});
+        this.firstName,
+        this.birthdate,
+        this.passport,
+        this.email,
+        this.phone,
+        this.gender});
 
   Passengers.fromJson(Map<String, dynamic> json) {
     lastName = json['last_name'];
@@ -131,9 +134,9 @@ class GrailApiClient {
 
   GrailApiClient(
       {required this.httpClient,
-      @required this.baseUrl,
-      @required this.apiKey,
-      @required this.secret})
+        @required this.baseUrl,
+        @required this.apiKey,
+        @required this.secret})
       : assert(httpClient != null);
 
   Map<String, String> getAuthorizationHeaders(Map<String, dynamic> params) {
@@ -206,6 +209,101 @@ class GrailApiClient {
         return result;
       }
     }
+  }
+
+  SearchPriceFillterModel? getAsyncResultPrice(
+      List<SearchTicketModel?> searchticket) {
+    SearchPriceFillterModel? result = null;
+    for (int i = 0; i < (searchticket as List<SearchTicketModel>).length; i++) {
+      // ignore: unrelated_type_equality_checks
+      if (searchticket[i] != []) {
+        for (int j = 0;
+        j < (searchticket[i].solutions as List<Solutions>).length;
+        j++) {
+          // ignore: unrelated_type_equality_checks
+          if (searchticket[i].solutions?[j] != []) {
+            for (int k = 0;
+            k <
+                (searchticket[i].solutions?[j].sections as List<Sections>)
+                    .length;
+            k++) {
+              // ignore: unrelated_type_equality_checks
+              if (searchticket[i].solutions?[j].sections?[k] != []) {
+                for (int m = 0;
+                m <
+                    (searchticket[i].solutions?[j].sections?[k].offers
+                    as List<Offers>)
+                        .length;
+                m++) {
+                  // ignore: unrelated_type_equality_checks
+                  if (searchticket[i].solutions?[j].sections?[k].offers?[m] !=
+                      []) {
+                    for (int n = 0;
+                    n <
+                        (searchticket[i]
+                            .solutions?[j]
+                            .sections?[k]
+                            .offers?[m]
+                            .services as List<Services>)
+                            .length;
+                    n++) {
+                      // ignore: unrelated_type_equality_checks
+                      if (searchticket[i]
+                          .solutions?[j]
+                          .sections?[k]
+                          .offers?[m]
+                          .services?[n] !=
+                          []) {
+                        if (result?.price == null ||
+                            (result?.price ?? 0) <
+                                (searchticket[i]
+                                    .solutions?[j]
+                                    .sections?[k]
+                                    .offers?[m]
+                                    .services?[n]
+                                    .price
+                                    ?.cents ??
+                                    0)) {
+                          result = SearchPriceFillterModel(
+                              bookingcode: searchticket[i]
+                                  .solutions?[j]
+                                  .sections?[k]
+                                  .offers?[m]
+                                  .services?[n]
+                                  .bookingCode,
+                              price: searchticket[i]
+                                  .solutions?[j]
+                                  .sections?[k]
+                                  .offers?[m]
+                                  .services?[n]
+                                  .price
+                                  ?.cents,
+                              departure:
+                              searchticket[i].solutions?[j].departure,
+                              duration: Dur(
+                                  hour: searchticket[i]
+                                      .solutions?[j]
+                                      .duration
+                                      ?.hour,
+                                  minutes: searchticket[i]
+                                      .solutions?[j]
+                                      .duration
+                                      ?.minutes));
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          print(searchticket[i].solutions?[j]);
+        }
+      }
+      print(searchticket[i]);
+    }
+
+    return result;
   }
 
   Future<String> getOnlineOrders(

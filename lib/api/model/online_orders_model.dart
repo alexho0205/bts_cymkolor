@@ -20,28 +20,28 @@ class OnlineOrdersModel {
 
   OnlineOrdersModel(
       {this.id,
-      this.railway,
-      this.offlineFulfillment,
-      this.from,
-      this.to,
-      this.trainDescription,
-      this.departure,
-      this.arrival,
-      this.trains,
-      this.passengers,
-      this.tickets,
-      this.onlinePaymentUrl,
-      this.ticketPrice,
-      this.paymentPrice,
-      this.chargingPrice,
-      this.rebateAmount,
-      this.records,
-      this.memo});
+        this.railway,
+        this.offlineFulfillment,
+        this.from,
+        this.to,
+        this.trainDescription,
+        this.departure,
+        this.arrival,
+        this.trains,
+        this.passengers,
+        this.tickets,
+        this.onlinePaymentUrl,
+        this.ticketPrice,
+        this.paymentPrice,
+        this.chargingPrice,
+        this.rebateAmount,
+        this.records,
+        this.memo});
 
   OnlineOrdersModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     railway =
-        json['railway'] != null ? Railway.fromJson(json['railway']) : null;
+    json['railway'] != null ? Railway.fromJson(json['railway']) : null;
     offlineFulfillment = json['offline_fulfillment'];
     from = json['from'] != null ? From.fromJson(json['from']) : null;
     to = json['to'] != null ? From.fromJson(json['to']) : null;
@@ -182,11 +182,11 @@ class Trains {
 
   Trains(
       {this.number,
-      this.type,
-      this.from,
-      this.to,
-      this.departure,
-      this.arrival});
+        this.type,
+        this.from,
+        this.to,
+        this.departure,
+        this.arrival});
 
   Trains.fromJson(Map<String, dynamic> json) {
     number = json['number'];
@@ -224,12 +224,12 @@ class Passengers {
 
   Passengers(
       {this.id,
-      this.firstName,
-      this.lastName,
-      this.birthdate,
-      this.email,
-      this.phone,
-      this.gender});
+        this.firstName,
+        this.lastName,
+        this.birthdate,
+        this.email,
+        this.phone,
+        this.gender});
 
   Passengers.fromJson(Map<String, dynamic> json) {
     id = json['id'];
