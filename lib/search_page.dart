@@ -9,9 +9,11 @@ class TravelInfo {
   final String image;
   final String title;
   final String description;
-  final String price;
+  final String price_info;
+  final String currency;
+  final int price;
 
-  TravelInfo({required this.image, required this.title, required this.description, required this.price});
+  TravelInfo({required this.image, required this.title, required this.description, required this.price, required this.currency, required this.price_info});
 }
 
 class TravelPage extends StatefulWidget {
@@ -29,7 +31,9 @@ class _TravelPageState extends State<TravelPage> {
       image: 'assets/image/travel_1_img.jpg',
       title: '新天鵝堡',
       description: '行程包含知名景點',
-      price: 'EUR 45',
+      price_info: 'EUR 45',
+      price: 45,
+      currency: 'EUR',
     ),
      /*TravelInfo(
        image: 'assets/image/travel_1_img.jpg',
@@ -54,7 +58,9 @@ class _TravelPageState extends State<TravelPage> {
         image: plan.imageUrl,
         title: plan.title,
         description: plan.description,
-        price: '${plan.currency} ${(plan.price).toString()}',
+        price_info: '${plan.currency} ${(plan.price).toString()}',
+        price: plan.price.toInt(),
+        currency: plan.currency,
       );
       setState(() {
         travelInfoList.add(t);
@@ -96,7 +102,7 @@ class _TravelPageState extends State<TravelPage> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  travelInfo.price,
+                  travelInfo.price_info,
                   style: const TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.bold,
@@ -105,12 +111,16 @@ class _TravelPageState extends State<TravelPage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(order_page);
+                  //Navigator.of(context).pushNamed(order_page);
 
-                  // Navigator.of(context)
-                  //     .push(MaterialPageRoute(builder: (context) {
-                  //   return OrderTicketPage();
-                  // }));
+                   Navigator.of(context)
+                       .push(MaterialPageRoute(builder: (context) {
+                     return OrderTicketPage(
+                       title: travelInfo.title,
+                       price: travelInfo.price,
+                       currency: travelInfo.currency,
+                     );
+                   }));
 
                   // Navigator.of(context).pop();
                 },
