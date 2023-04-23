@@ -11,6 +11,9 @@ class Reservation {
   String? paymentId;
   final String currency;
   final int? amount;
+  String? ticketConfirmId;
+  String? PhoneNumber;
+  bool PhoneVerified = false;
 
   Reservation({
     String? id,
@@ -22,6 +25,9 @@ class Reservation {
     this.paymentId,
     required this.currency,
     required this.amount,
+    required this.ticketConfirmId,
+    required this.PhoneNumber,
+    required this.PhoneVerified,
   }):id = id ?? Uuid().v4();
 
   factory Reservation.fromJson(Map<String, dynamic> json) {
@@ -37,6 +43,9 @@ class Reservation {
       paymentId: json['payment_id'],
       currency: json['currency'],
       amount: json['amount'],
+      ticketConfirmId: json['ticket_confirm_id'],
+      PhoneNumber: json['phone_number'],
+      PhoneVerified: json['phone_verified'],
     );
   }
 
@@ -51,6 +60,9 @@ class Reservation {
       'payment_id': paymentId,
       'currency': currency,
       'amount': amount,
+      'ticket_confirm_id': ticketConfirmId,
+      'phone_number': PhoneNumber,
+      'phone_verified': PhoneVerified,
     };
   }
 }
