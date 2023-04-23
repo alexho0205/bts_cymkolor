@@ -12,8 +12,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:bts_cymkolor/models/ticket.dart';
 import 'package:bts_cymkolor/models/reservation.dart';
 import 'package:intl/intl.dart';
+import 'package:bts_cymkolor/models/sendMailInfo.dart';
 
-enum MailType { Ticket, Reservation, Reservation_inner, Payment }
+enum MailType { Ticket, Reservation, Reservation_inner, Payment,Email }
 
 class TicketMailer {
   SmtpServer smtpServer = SmtpServer(
@@ -63,7 +64,20 @@ class TicketMailer {
 
     return file;
   }
-
+  Future<bool> SendEmail(SendMailInfo sendMailInfo) async {
+    try {
+      Message message = GetEmailMessage(MailType.Email, sendMailInfo);
+      final sendReport = await send(message, smtpServer);
+      print('Message sent: ' + sendReport.toString());
+      return true;
+    } on MailerException catch (e) {
+      print('Message not sent.');
+      for (var p in e.problems) {
+        print('Problem: ${p.code}: ${p.msg}');
+      }
+      return false;
+    }
+  }
   Message GetEmailMessage<T>(MailType mailType, T object) {
     Message message = Message();
     switch (mailType) {
@@ -77,12 +91,21 @@ class TicketMailer {
       case MailType.Reservation_inner:
         message = GetReservationInnerEmail(object as Reservation);
         break;
+      case MailType.Email:
+        message = GetEmail(object as SendMailInfo);
+        break;
       case MailType.Payment:
         break;
     }
     return message;
   }
-
+  Message GetEmail(SendMailInfo sendMailInfo) {
+    return Message()
+      ..from = Address(smtpServer.username ?? '', 'Email Sender')
+      ..recipients = sendMailInfo.recipients
+      ..subject = sendMailInfo.subject
+      ..html = sendMailInfo.body;
+  }
   Message GetTicketMessage(Ticket ticket) {
     return Message()
       ..from = Address(smtpServer.username ?? '', 'Ticket Sender')
