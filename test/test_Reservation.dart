@@ -1,8 +1,5 @@
-import 'package:bts_cymkolor/search_page.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:bts_cymkolor/models/reservation.dart';
 import 'package:bts_cymkolor/models/passenger.dart';
@@ -37,6 +34,9 @@ void main() async{
       seatReserved: true,
       memo: "123456789-00",
       paymentId: "123456789-00",
+      ticketConfirmId: "",
+      PhoneNumber: "",
+      PhoneVerified: false,
       currency: "USD",
       amount: 1000);
 

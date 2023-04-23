@@ -59,9 +59,6 @@ class _TravelPageState extends State<TravelPage> {
     //travelInfoList.add(  );
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('旅遊資訊'),
-      ),
       body: ListView.builder(
         itemCount: travelInfoList.length,
         itemBuilder: (context, index) {

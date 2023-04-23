@@ -60,6 +60,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     seatReserved: true,
                     memo: "123456789-00",
                     paymentId: "123456789-00",
+                    ticketConfirmId: "",
+                    PhoneNumber: "",
+                    PhoneVerified: false,
                     currency: "USD",
                     amount: 1000);
                 if (await Payment().makeReservation(reservation)!="") {

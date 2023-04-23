@@ -1,13 +1,12 @@
+
 import 'package:bts_cymkolor/search_page.dart';
+import 'package:bts_cymkolor/set_search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'constent.dart';
-import 'homescreen.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_services_binding/flutter_services_binding.dart';
-import 'firebase_options.dart';
+import 'order_set_ticketpage.dart';
 import 'order_ticketpage.dart';
 
 void main() async {
@@ -30,6 +29,7 @@ class MyApp extends StatelessWidget {
 
   final routes = <String, WidgetBuilder>{ // map 關係 => keyStr : View Widget
     order_page: (context) => OrderTicketPage(),
+    order_set_page: (context) => OrderSetTicketPage(),
   };
 
   // This widget is the root of your application.
@@ -37,35 +37,61 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: '旅程小管家',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: TravelPage(),
+      home: const MyStatefulWidget(),
       routes: routes,
     );
   }
 }
 
-// class MyHomePage extends StatefulWidget {
-//   const MyHomePage({super.key, required this.title});
-//   final String title;
-//
-//   @override
-//   State<MyHomePage> createState() => _MyHomePageState();
-// }
-//
-// class _MyHomePageState extends State<MyHomePage> {
-//
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       theme: ThemeData(
-//         primarySwatch: Colors.green,
-//       ),
-//       //initial route
-//       home: TravelPage(),
-//     );
-//   }
-// }
+
+class MyStatefulWidget extends StatefulWidget {
+  const MyStatefulWidget({super.key});
+
+  @override
+  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
+}
+
+class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+  int _selectedIndex = 0;
+  static final List<Widget> _widgetOptions = [
+    TravelPage(),
+    TravelSetPage()
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('旅程小管家'),
+      ),
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: '門票',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.business),
+            label: '方案',
+          )
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap: _onItemTapped,
+      ),
+    );
+  }
+}
