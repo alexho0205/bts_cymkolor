@@ -9,6 +9,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_services_binding/flutter_services_binding.dart';
 import 'firebase_options.dart';
 import 'order_ticketpage.dart';
+import 'package:bts_cymkolor/ui/smsValidateForm.dart';
+import 'dart:math';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,13 +37,18 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
+    Random random = new Random();
+    int number = random.nextInt(9000) + 1000;
+    String randomString = number.toString();
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: TravelPage(),
+      home: TravelPage(),//SmsValidateForm("+886988033414",randomString),
       routes: routes,
     );
   }

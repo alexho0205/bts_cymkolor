@@ -61,7 +61,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     memo: "123456789-00",
                     paymentId: "123456789-00",
                     currency: "USD",
-                    amount: 1000);
+                    amount: 1000,
+                    ticketConfirmId: "",
+                    PhoneNumber: "+886988033414",
+                    PhoneVerified: false);
                 if (await Payment().makeReservation(reservation)!="") {
                   showDialog(
                       context: context,

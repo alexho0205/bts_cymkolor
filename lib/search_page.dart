@@ -31,29 +31,31 @@ class _TravelPageState extends State<TravelPage> {
       description: '行程包含知名景點',
       price: 'EUR 45',
     ),
-    // TravelInfo(
-    //   image: 'assets/image/travel_1_img.jpg',
-    //   title: '聖米希爾山',
-    //   description: '行程包含南山塔、明洞、樂天世界等知名景點',
-    //   price: 'NTD 40,000',
-    // ),
+     /*TravelInfo(
+       image: 'assets/image/travel_1_img.jpg',
+       title: '聖米希爾山',
+       description: '行程包含南山塔、明洞、樂天世界等知名景點',
+       price: 'NTD 40,000',
+     ),*/
   ];
 
   @override
   Widget build(BuildContext context) {
 
     // todo get solutions
-    PlanRepository repository = new PlanRepository();
-    Stream<List<Plan>> plans =  repository.getPlans();
-    plans.listen((List<Plan> planList) {
-      planList.forEach((Plan plan) {
+    List<Plan> _plans = [];
+   PlanRepository repository = new PlanRepository();
+    repository.getPlans().first.then((List<Plan> plans) {
+      plans.forEach((plan) {
         TravelInfo t = TravelInfo(
           image: plan.imageUrl,
           title: plan.title,
           description: plan.description,
-          price: (plan.price).toString() ,
+          price: '${plan.currency} ${(plan.price).toString()}' ,
         );
-        travelInfoList.add(t);
+        setState(() {
+          travelInfoList.add(t);
+        });
       });
     });
     //travelInfoList.add(  );
@@ -69,7 +71,9 @@ class _TravelPageState extends State<TravelPage> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Image.asset(travelInfo.image),
+              travelInfo.image.contains('assets')
+                  ? Image.asset(travelInfo.image)
+                  : Image.network(travelInfo.image),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
