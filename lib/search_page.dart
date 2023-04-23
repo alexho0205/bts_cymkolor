@@ -48,10 +48,10 @@ class _TravelPageState extends State<TravelPage> {
     plans.listen((List<Plan> planList) {
       planList.forEach((Plan plan) {
         TravelInfo t = TravelInfo(
-          image: 'assets/image/travel_1_img.jpg',
-          title: '聖米希爾山',
-          description: '行程包含南山塔、明洞、樂天世界等知名景點',
-          price: 'NTD 40,000',
+          image: plan.imageUrl,
+          title: plan.title,
+          description: plan.description,
+          price: (plan.price).toString() ,
         );
         travelInfoList.add(t);
       });
