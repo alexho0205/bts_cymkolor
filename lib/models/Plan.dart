@@ -3,7 +3,7 @@ class Plan {
   final String title;
   final String description;
   final String currency;
-  final double price;
+  final num price;
   final String imageUrl;
   final String country;
 
@@ -22,7 +22,7 @@ class Plan {
         title = data['title'],
         description = data['description'],
         currency = data['currency'],
-        price = data['price'].toDouble(),
+        price = data['price'],
         imageUrl = data['imageUrl'],
         country = data['country'];
 
