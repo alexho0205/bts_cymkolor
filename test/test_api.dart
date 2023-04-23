@@ -17,8 +17,8 @@ main() {
 
     print(rtn2[1].toString());
 
-    List<Passengers> passengers = [];
-    passengers.add(Passengers(
+    List<G2railPassengers> passengers = [];
+    passengers.add(G2railPassengers(
         lastName: "zhang",
         firstName: "san",
         birthdate: "1986-09-01",
@@ -36,11 +36,11 @@ main() {
     print(rtn4.toString());
 
     // Confirm API
-    /*var rtn5 = await client.getConfirmOrders("OD_9MJZ658YD");
+    var rtn5 = await client.getConfirmOrders("OD_9MJZ658YD");
     print(rtn5.toString());
     var rtn6 =
         await client.getConfirmAsyncResult("64fac098963f7784e61407f967de825f");
-    print(rtn6.toString());*/
+    print(rtn6.toString());
 
     var rtn7 = await client.getDownLoadTicketAsyncResult("OC_10E6XXVYN");
     print(rtn7.toString());

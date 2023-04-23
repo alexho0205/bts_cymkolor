@@ -40,7 +40,7 @@ class SearchCriteria {
   }
 }
 
-class Passengers {
+class G2railPassengers {
   String? lastName;
   String? firstName;
   String? birthdate;
@@ -49,7 +49,7 @@ class Passengers {
   String? phone;
   String? gender;
 
-  Passengers(
+  G2railPassengers(
       {this.lastName,
         this.firstName,
         this.birthdate,
@@ -58,7 +58,7 @@ class Passengers {
         this.phone,
         this.gender});
 
-  Passengers.fromJson(Map<String, dynamic> json) {
+  G2railPassengers.fromJson(Map<String, dynamic> json) {
     lastName = json['last_name'];
     firstName = json['first_name'];
     birthdate = json['birthdate'];
@@ -82,7 +82,7 @@ class Passengers {
 }
 
 class OnlineOrders {
-  List<Passengers> passeners;
+  List<G2railPassengers> passeners;
   List<String> sections;
   bool seatReserved;
   String memo;
