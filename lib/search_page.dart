@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'constent.dart';
+import 'models/Plan.dart';
 import 'order_ticketpage.dart';
+import 'repository/plan_repository.dart';
 
 class TravelInfo {
   final String image;
@@ -39,6 +41,23 @@ class _TravelPageState extends State<TravelPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    // todo get solutions
+    PlanRepository repository = new PlanRepository();
+    Stream<List<Plan>> plans =  repository.getPlans();
+    plans.listen((List<Plan> planList) {
+      planList.forEach((Plan plan) {
+        TravelInfo t = TravelInfo(
+          image: 'assets/image/travel_1_img.jpg',
+          title: '聖米希爾山',
+          description: '行程包含南山塔、明洞、樂天世界等知名景點',
+          price: 'NTD 40,000',
+        );
+        travelInfoList.add(t);
+      });
+    });
+    //travelInfoList.add(  );
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('旅遊資訊'),
