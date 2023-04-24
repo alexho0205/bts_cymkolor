@@ -38,7 +38,11 @@ void main() async{
       PhoneNumber: "",
       PhoneVerified: false,
       currency: "USD",
-      amount: 1000);
+      amount: 1000,
+      ticketConfirmId: "",
+      PhoneNumber:"" ,
+      PhoneVerified : false
+      );
 
     Payment payment = new Payment();
     String result = await payment.makeReservation(reservation);

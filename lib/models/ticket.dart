@@ -26,7 +26,7 @@ class Ticket {
     required this.currency,
     required this.amount,
     required this.useDate,
-    required this.sourceId,
+    this.sourceId = "",
   }) : id = id ?? Uuid().v4(); // 使用Uuid().v4()生成唯一ID
 
   factory Ticket.fromMap(Map<String, dynamic> map) {
@@ -41,8 +41,8 @@ class Ticket {
       downloadUrl: map['download_url'],
       currency: map['currency'],
       amount: map['amount'],
-      sourceId: map['source_id'],
       useDate: DateTime.parse(map['use_date']),
+      sourceId: map['source_id'],
     );
   }
 
@@ -58,7 +58,8 @@ class Ticket {
       'download_url': downloadUrl,
       'currency': currency,
       'amount': amount,
-      'sourceId': sourceId,
+      'use_date': useDate.toIso8601String(),
+      'source_id': sourceId,
     };
   }
 }
