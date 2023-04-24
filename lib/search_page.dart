@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'constent.dart';
 import 'models/Plan.dart';
+import 'models/Plan2.dart';
 import 'order_ticketpage.dart';
 import 'repository/plan_repository.dart';
+import 'repository/tour_repository.dart';
 
 class TravelInfo {
   final String image;
@@ -47,6 +49,26 @@ class _TravelPageState extends State<TravelPage> {
   void initState() {
     super.initState();
     loadPlans();
+    loadPlans2();
+  }
+
+  void loadPlans2() async {
+    TourRepository repository = TourRepository();
+    List<Tour> plans = await repository.getTours().first;
+
+    plans.forEach((plan) {
+      TravelInfo t = TravelInfo(
+        image: plan.images[0],
+        title: plan.name,
+        description: plan.intro,
+        price_info: 'EUR ${(plan.priceEur).toString()}',
+        price: plan.priceEur.toInt(),
+        currency: "EUR",
+      );
+      setState(() {
+        travelInfoList.add(t);
+      });
+    });
   }
 
   void loadPlans() async {

@@ -1,8 +1,9 @@
+
 class Tour {
   final String id;
   final String name;
   final String intro;
-  final String highlights;
+  final String? highlights;
   final double priceEur;
   final List<String> images;
   final String location;
@@ -23,8 +24,8 @@ class Tour {
       name: json['name'],
       intro: json['intro'],
       highlights: json['highlights'],
-      priceEur: double.parse(json['price_eur']),
-      images: List<String>.from(json['images']),
+      priceEur: double.parse(json['price_eur'].toString()),
+      images: json['images'] == null ? [] : List<String>.from(json['images']),
       location: json['location'],
     );
   }
