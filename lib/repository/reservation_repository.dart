@@ -30,9 +30,12 @@ class ReservationRepository {
     }
   }
 
-  Future<void> updateReservation(String documentId, Reservation reservation) async {
-    final docRef = firestore.collection(collectionName).doc(documentId);
-    await docRef.update(reservation.toJson());
+  Future<void> updateReservation(String id, Reservation reservation) async {
+    final querySnapshot = await firestore.collection(collectionName).where('id', isEqualTo: id).get();
+    if (querySnapshot.docs.isNotEmpty) {
+      DocumentReference<Map<String, dynamic>> docRef = querySnapshot.docs.first.reference;
+      await docRef.update(reservation.toJson());
+    }
   }
 
   Future<String> createReservation(Reservation reservation) async {
