@@ -1,18 +1,39 @@
-import 'dart:convert';
-import 'package:flutter/services.dart';
-import 'package:bts_cymkolor/models/tour.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../models/Plan2.dart';
 
 class TourRepository {
-  Future<List<Tour>> fetchTours({int? limit}) async {
-    final jsonString = await rootBundle.loadString('assets/tours.json');
-    final jsonResponse = json.decode(jsonString) as List;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-    List<Tour> tours = jsonResponse.map((tourJson) => Tour.fromJson(tourJson)).toList();
 
-    if (limit != null && limit > 0 && limit < tours.length) {
-      tours = tours.take(limit).toList();
-    }
+  Future<void> addTour(Tour tour) async {
+    await _firestore.collection('plans2').doc(tour.id).set(tour.toJson());
+  }
 
-    return tours;
+  Stream<List<Tour>> getTour(String id) {
+    return _firestore.collection('plans2').snapshots().map(
+          (snapshot) => snapshot.docs
+          .map(
+              (doc) => Tour.fromJson(doc.data() as Map<String, dynamic>)
+      ).toList(),
+    );
+  }
+
+  Future<void> updateTour(Tour tour) async {
+    await _firestore.collection('plans2').doc(tour.id).update(tour.toJson());
+  }
+
+  Future<void> deleteTour(String id) async {
+    await _firestore.collection('plans2').doc(id).delete();
+  }
+
+  Stream<List<Tour>> getTours() {
+    return _firestore.collection('plans2')
+        .orderBy('sales_count', descending: true)
+        .snapshots().map(
+          (snapshot) => snapshot.docs
+          .map(
+              (doc) => Tour.fromJson(doc.data() as Map<String, dynamic>)
+      ).toList(),
+    );
   }
 }

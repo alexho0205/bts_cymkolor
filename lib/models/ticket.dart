@@ -10,8 +10,9 @@ class Ticket {
   final int downloadCount;
   final String downloadUrl;
   final String currency;
-  final int amount;
+  final double amount;
   final DateTime useDate;
+  final String sourceId;
 
   Ticket({
     String? id,

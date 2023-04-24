@@ -10,7 +10,7 @@ class Reservation {
   final String memo;
   String? paymentId;
   final String currency;
-  final int? amount;
+  final double amount;
   String? ticketConfirmId;
   String? PhoneNumber;
   bool PhoneVerified = false;
