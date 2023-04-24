@@ -6,6 +6,19 @@ class ReservationRepository {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final String collectionName = 'Reservation';
 
+  Future<Reservation> fetchReservationByPaymentId(String paymentId) async {
+    final querySnapshot = await firestore
+        .collection(collectionName)
+        .where('payment_id', isEqualTo: paymentId)
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      return Reservation.fromJson(querySnapshot.docs.first.data());
+    } else {
+      throw Exception('Reservation not found');
+    }
+  }
+
   Future<Reservation> fetchReservation(String documentId) async {
     final docRef = firestore.collection(collectionName).doc(documentId);
     final docSnapshot = await docRef.get();

@@ -13,7 +13,8 @@ class PlanRepository {
   }
 
   Stream<List<Plan>> getPlans() {
-    return _firebaseFirestore.collection('plans').snapshots().map(
+    return _firebaseFirestore.collection('plans')
+          .orderBy('sales_count', descending: true).snapshots().map(
           (snapshot) => snapshot.docs
           .map(
               (doc) => Plan.fromMap(doc.data() as Map<String, dynamic>)

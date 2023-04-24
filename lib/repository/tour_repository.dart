@@ -27,7 +27,9 @@ class TourRepository {
   }
 
   Stream<List<Tour>> getTours() {
-    return _firestore.collection('plans2').snapshots().map(
+    return _firestore.collection('plans2')
+        .orderBy('sales_count', descending: true)
+        .snapshots().map(
           (snapshot) => snapshot.docs
           .map(
               (doc) => Tour.fromJson(doc.data() as Map<String, dynamic>)

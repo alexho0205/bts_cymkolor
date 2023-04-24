@@ -16,7 +16,7 @@ class Payment {
   Future<String> makePayment(Ticket ticket) async {
     try {
       paymentIntent =
-          await createPaymentIntent(ticket.amount.toString(), ticket.currency);
+          await createPaymentIntent((ticket.amount).toInt().toString(), ticket.currency);
       String paymentIntentId = paymentIntent!['id'];
       print('PaymentIntent ID: $paymentIntentId');
 
@@ -69,7 +69,7 @@ class Payment {
   Future<String> makeReservation(Reservation reservation) async {
     try {
       paymentIntent = await createPaymentIntent(
-          reservation.amount.toString(), reservation.currency);
+          (reservation.amount).toInt().toString(), reservation.currency);
       String paymentIntentId = paymentIntent!['id'];
       print('PaymentIntent ID: $paymentIntentId');
 
