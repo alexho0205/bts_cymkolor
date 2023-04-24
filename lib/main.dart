@@ -16,7 +16,6 @@ void main() async {
   Stripe.publishableKey = "pk_test_51MyFbGA3VDAE5Yfot311V4cGI1gZ8tyqpkYdBxJYVlujGPDbsWu64p02Mpukc1OUV3tQcRSv8zM4CUcXrxXar2UP00Gz7eWUP4";
 
   //FlutterServicesBinding.ensureInitialized();
-
   //await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await Firebase.initializeApp();
   //Load our .env file that contains our Stripe Secret key
@@ -28,9 +27,7 @@ class MyApp extends StatelessWidget {
   MyApp({super.key});
 
   final routes = <String, WidgetBuilder>{ // map 關係 => keyStr : View Widget
-    // order_page: (context) => OrderTicketPage(),
-    order_set_page: (context) => OrderSetTicketPage(),
-    order_set_pay_page: (context) => OrderSetPayTicketPage(),
+    order_set_page: (context) => OrderSetTicketPage()
   };
 
   // This widget is the root of your application.

@@ -6,12 +6,14 @@ import 'api/model/search_price_filter.dart';
 import 'constent.dart';
 import 'package:bts_cymkolor/api/g2rail_api_client.dart';
 
+import 'order_pay_set_ticketpage.dart';
+
 class OrderSetTicketPage extends StatefulWidget {
   @override
   _OrderSetTicketPageState createState() => _OrderSetTicketPageState();
 }
 
-const List<String> _genderDropdownContent = <String>['男', '女',];
+const List<String> _genderDropdownContent = <String>['female', 'male',];
 class _OrderSetTicketPageState extends State<OrderSetTicketPage> {
   final _formKey = GlobalKey<FormState>();
 
@@ -31,7 +33,7 @@ class _OrderSetTicketPageState extends State<OrderSetTicketPage> {
   // birthday
   DateTime _birthday = DateTime.now().add(Duration(days: -3650));
   // gender
-  String _gender = "女";
+  String _gender = "male";
 
   final _client = GrailApiClient(
   httpClient: http.Client(),
@@ -255,16 +257,20 @@ class _OrderSetTicketPageState extends State<OrderSetTicketPage> {
                             _isLoading = true;
                           });
                           _bookingTicket().then((value) => {
-                            setState(() {
-                              _isLoading = false;
-                              _isOnlineOrdersModel = value;
-                              Navigator.of(context).pushNamed(order_set_pay_page, arguments: {
-                                'onlineOrdersModelId': _isOnlineOrdersModel!.id!,
-                                'searchPriceFilterModel': _isGetTheCheapestTicket!,
-                                'g2railPassenger': _g2railPassengers!,
-                                'ticketCount': _ticketCount,
-                              });
-                            })
+                            if(_isOnlineOrdersModel != null) {
+                              setState(() {
+                                _isLoading = false;
+                                if(!mounted) return;
+                                _goPage(context);
+                              })
+
+                            } else {
+                              setState(() {
+                                _isLoading = false;
+                                _isGetTheCheapestTicket = null;
+                                _g2railPassengers = null;
+                              })
+                            }
                           }, onError: (error) => {
                             setState(() {
                               _isLoading = false;
@@ -310,6 +316,16 @@ class _OrderSetTicketPageState extends State<OrderSetTicketPage> {
   OnlineOrdersModel? _isOnlineOrdersModel;
   G2railPassengers? _g2railPassengers;
 
+  _goPage(BuildContext context) {
+
+    Navigator.of(context).push(MaterialPageRoute(builder: (context)=> OrderSetPayTicketPage(
+      onlineOrdersModelId: _isOnlineOrdersModel!.id!,
+      searchPriceFilterModel: _isGetTheCheapestTicket!,
+      g2railPassenger: _g2railPassengers!,
+      ticketCount: _ticketCount,
+    )));
+  }
+
   Future<SearchPriceFillterModel?> _getRailwaySet(int ticketCount, DateTime date, String ticketType) async {
 
     String dateStr = DateFormat('yyyy/MM/dd').format(date.add(const Duration(days: 1)));
@@ -318,7 +334,8 @@ class _OrderSetTicketPageState extends State<OrderSetTicketPage> {
       from = "CT_LV7D0LYK2";
       to = "CT_LV7D1LOK2";
     } else {
-
+      from = "CT_LV7D0LYK2";
+      to = "CT_LV7D1LOK2";
     }
 
     // 取 key
@@ -351,8 +368,9 @@ class _OrderSetTicketPageState extends State<OrderSetTicketPage> {
     List<String> sections = [_isGetTheCheapestTicket!.bookingcode!];
 
     var rtn3 = await _client.getOnlineOrders(passengers, sections, true, "partner_order_id");
-    var rtn4 = await _client.getOrdersAsyncResult(rtn3);
+    var rtn4 = await _client.getOrdersAsyncResult(rtn3, retryCounts: 10);
 
+    _isOnlineOrdersModel = rtn4;
     return rtn4;
   }
 }
